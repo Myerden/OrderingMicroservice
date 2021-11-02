@@ -19,7 +19,7 @@ namespace CustomerService.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
-                .OwnsOne(c => c.Address);
+                .HasOne(c => c.Address);
 
         }
     }

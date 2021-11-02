@@ -19,7 +19,7 @@ namespace OrderService.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()
-                .OwnsOne(c => c.Address);
+                .HasOne(c => c.Address);
 
             modelBuilder.Entity<Order>()
                 .HasOne(c => c.Product);

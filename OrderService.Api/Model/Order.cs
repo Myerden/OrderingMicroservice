@@ -19,6 +19,7 @@ namespace OrderService.Api.Model
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public int AddressId { get; set; }
         [Required]
         public Address Address { get; set; }
         public Guid ProductId { get; set; }
