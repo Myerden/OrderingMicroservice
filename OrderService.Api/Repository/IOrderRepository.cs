@@ -8,7 +8,7 @@ namespace OrderService.Api.Repository
 {
     public interface IOrderRepository
     {
-        public Task<Guid> Create(Order order);
+        public Task<Guid?> Create(Order order);
 
         public Task<bool> Update(Order order);
 

@@ -31,6 +31,9 @@ namespace CustomerService.Api
         {
             services.AddDbContext<CustomerContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

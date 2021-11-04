@@ -1,4 +1,6 @@
-﻿using CustomerService.Api.Model;
+﻿using AutoMapper;
+using CustomerService.Api.Dto;
+using CustomerService.Api.Model;
 using CustomerService.Api.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,17 +17,20 @@ namespace CustomerService.Api.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public CustomerController(ICustomerRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var customers = await _customerRepository.Get();
-            return Ok(customers);
+            var customersDTO = _mapper.Map<IEnumerable<CustomerDTO>>(customers);
+            return Ok(customersDTO);
         }
 
         [HttpGet("{id}")]
@@ -36,16 +41,19 @@ namespace CustomerService.Api.Controllers
             {
                 return NotFound("Customer not found");
             }
-            return Ok(customer);
+            var customerDTO = _mapper.Map<CustomerDTO>(customer);
+            return Ok(customerDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Customer customer)
+        public async Task<IActionResult> Post([FromBody] CustomerDTO customerDTO)
         {
             if (ModelState.IsValid)
             {
+                var customer = _mapper.Map<Customer>(customerDTO);
                 await _customerRepository.Create(customer);
-                return CreatedAtAction(nameof(Get), new { id = customer.Id }, customer);
+                customerDTO = _mapper.Map<CustomerDTO>(customer);
+                return CreatedAtAction(nameof(Get), new { id = customerDTO.Id }, customerDTO);
             }
             else
             {
@@ -54,7 +62,7 @@ namespace CustomerService.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Customer customer)
+        public async Task<IActionResult> Put(Guid id, [FromBody] CustomerDTO customerDTO)
         {
             if(await _customerRepository.Validate(id) == false)
             {
@@ -63,6 +71,7 @@ namespace CustomerService.Api.Controllers
 
             if (ModelState.IsValid)
             {
+                var customer = _mapper.Map<Customer>(customerDTO);
                 customer.Id = id;
                 await _customerRepository.Update(customer);
                 return Ok("Customer updated successfully");

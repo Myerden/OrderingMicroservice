@@ -17,28 +17,49 @@ namespace OrderService.Api.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<Guid> Create(Order order)
+        public async Task<Guid?> Create(Order order)
         {
-            order.CreatedAt = DateTime.Now;
-            await _dbContext.AddAsync(order);
-            await _dbContext.SaveChangesAsync();
-            return order.Id;
+            try
+            {
+                order.CreatedAt = DateTime.Now;
+                await _dbContext.AddAsync(order);
+                await _dbContext.SaveChangesAsync();
+                return order.Id;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<bool> Update(Order order)
         {
-            order.UpdatedAt = DateTime.Now;
-            _dbContext.Entry(order).State = EntityState.Modified;
-            var num = await _dbContext.SaveChangesAsync();
-            return num > 0;
+            try
+            {
+                order.UpdatedAt = DateTime.Now;
+                _dbContext.Entry(order).State = EntityState.Modified;
+                var num = await _dbContext.SaveChangesAsync();
+                return num > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var product = await Get(id);
-            _dbContext.Orders.Remove(product);
-            var num = await _dbContext.SaveChangesAsync();
-            return num > 0;
+            try
+            {
+                var product = await Get(id);
+                _dbContext.Orders.Remove(product);
+                var num = await _dbContext.SaveChangesAsync();
+                return num > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<IEnumerable<Order>> Get()

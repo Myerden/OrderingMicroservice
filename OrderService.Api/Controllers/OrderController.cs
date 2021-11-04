@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using OrderService.Api.Dto;
 using OrderService.Api.Model;
 using OrderService.Api.Repository;
 using System;
@@ -15,17 +17,20 @@ namespace OrderService.Api.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
 
-        public OrderController(IOrderRepository orderRepository)
+        public OrderController(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var customers = await _orderRepository.Get();
-            return Ok(customers);
+            var orders = await _orderRepository.Get();
+            var ordersDTO = _mapper.Map<IEnumerable<OrderDTO>>(orders);
+            return Ok(ordersDTO);
         }
 
         [HttpGet("{id}")]
@@ -36,16 +41,19 @@ namespace OrderService.Api.Controllers
             {
                 return NotFound("Order not found");
             }
-            return Ok(order);
+            var orderDTO = _mapper.Map<OrderDTO>(order);
+            return Ok(orderDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Order order)
+        public async Task<IActionResult> Post([FromBody] OrderDTO orderDTO)
         {
             if (ModelState.IsValid)
             {
+                var order = _mapper.Map<Order>(orderDTO);
                 Guid orderId = await _orderRepository.Create(order);
-                return CreatedAtAction(nameof(Get), new { id = orderId }, order);
+                orderDTO = _mapper.Map<OrderDTO>(order);
+                return CreatedAtAction(nameof(Get), new { id = orderDTO.Id }, orderDTO);
             }
             else
             {
@@ -54,7 +62,7 @@ namespace OrderService.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Order order)
+        public async Task<IActionResult> Put(Guid id, [FromBody] OrderDTO orderDTO)
         {
             if (await _orderRepository.Validate(id) == false)
             {
@@ -63,9 +71,10 @@ namespace OrderService.Api.Controllers
 
             if (ModelState.IsValid)
             {
+                var order = _mapper.Map<Order>(orderDTO);
                 order.Id = id;
                 await _orderRepository.Update(order);
-                return Ok(order);
+                return Ok("Order updated successfully");
             }
             else
             {

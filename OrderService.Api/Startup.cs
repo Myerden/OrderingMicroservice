@@ -31,6 +31,9 @@ namespace OrderService.Api
         {
             services.AddDbContext<OrderContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

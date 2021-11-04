@@ -17,28 +17,49 @@ namespace CustomerService.Api.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<Guid> Create(Customer customer)
+        public async Task<Guid?> Create(Customer customer)
         {
-            customer.CreatedAt = DateTime.Now;
-            await _dbContext.AddAsync(customer);
-            await _dbContext.SaveChangesAsync();
-            return customer.Id;
+            try
+            {
+                customer.CreatedAt = DateTime.Now;
+                await _dbContext.AddAsync(customer);
+                await _dbContext.SaveChangesAsync();
+                return customer.Id;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<bool> Update(Customer customer)
         {
-            customer.UpdatedAt = DateTime.Now;
-            _dbContext.Entry(customer).State = EntityState.Modified;
-            var num = await _dbContext.SaveChangesAsync();
-            return num > 0;
+            try
+            {
+                customer.UpdatedAt = DateTime.Now;
+                _dbContext.Entry(customer).State = EntityState.Modified;
+                var num = await _dbContext.SaveChangesAsync();
+                return num > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var product = await Get(id);
-            _dbContext.Customers.Remove(product);
-            var num = await _dbContext.SaveChangesAsync();
-            return num > 0;
+            try
+            {
+                var product = await Get(id);
+                _dbContext.Customers.Remove(product);
+                var num = await _dbContext.SaveChangesAsync();
+                return num > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<IEnumerable<Customer>> Get()
