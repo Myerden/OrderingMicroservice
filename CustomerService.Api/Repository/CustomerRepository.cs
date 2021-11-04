@@ -17,19 +17,12 @@ namespace CustomerService.Api.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<Guid?> Create(Customer customer)
+        public async Task<Guid> Create(Customer customer)
         {
-            try
-            {
-                customer.CreatedAt = DateTime.Now;
-                await _dbContext.AddAsync(customer);
-                await _dbContext.SaveChangesAsync();
-                return customer.Id;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            customer.CreatedAt = DateTime.Now;
+            await _dbContext.AddAsync(customer);
+            await _dbContext.SaveChangesAsync();
+            return customer.Id;
         }
 
         public async Task<bool> Update(Customer customer)
@@ -38,6 +31,9 @@ namespace CustomerService.Api.Repository
             {
                 customer.UpdatedAt = DateTime.Now;
                 _dbContext.Entry(customer).State = EntityState.Modified;
+                _dbContext.Entry(customer).Property(c => c.CreatedAt).IsModified = false;
+                _dbContext.Entry(customer.Address).State = EntityState.Modified;
+                
                 var num = await _dbContext.SaveChangesAsync();
                 return num > 0;
             }

@@ -19,8 +19,8 @@ namespace CustomerService.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
-                .HasOne(c => c.Address);
-
+                .OwnsOne(c => c.Address)
+                .WithOwner();
         }
     }
 }

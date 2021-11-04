@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,24 @@ namespace CustomerService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CustomerContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            if (Constants.Environment.IsUnitTestActive)
+            {
+                //use in-memory Sqlite for unit tests
+
+                var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
+                keepAliveConnection.Open();
+
+                services.AddDbContext<CustomerContext>(options =>
+                {
+                    options.UseSqlite(keepAliveConnection);
+                });
+            }
+            else
+            {
+                services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            }
+
+            
             services.AddTransient<ICustomerRepository, CustomerRepository>();
 
             services.AddAutoMapper(typeof(Startup));
@@ -42,13 +60,18 @@ namespace CustomerService.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CustomerContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerService.Api v1"));
+            }
+
+            if (Constants.Environment.IsUnitTestActive)
+            {
+                context.Database.EnsureCreated();
             }
 
             app.UseHttpsRedirection();

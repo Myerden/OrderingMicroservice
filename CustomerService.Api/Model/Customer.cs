@@ -15,7 +15,6 @@ namespace CustomerService.Api.Model
         public string Email { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int AddressId { get; set; }
         [Required]
         public Address Address { get; set; }
     }

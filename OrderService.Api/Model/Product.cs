@@ -8,6 +8,7 @@ namespace OrderService.Api.Model
 {
     public class Product
     {
+        [Required]
         public Guid Id { get; set; }
         [Required]
         public string ImageUrl { get; set; }

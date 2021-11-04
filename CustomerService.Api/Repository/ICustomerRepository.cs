@@ -8,7 +8,7 @@ namespace CustomerService.Api.Repository
 {
     public interface ICustomerRepository
     {
-        public Task<Guid?> Create(Customer customer);
+        public Task<Guid> Create(Customer customer);
 
         public Task<bool> Update(Customer customer);
 

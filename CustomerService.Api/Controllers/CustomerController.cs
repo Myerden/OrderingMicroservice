@@ -48,17 +48,15 @@ namespace CustomerService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerDTO customerDTO)
         {
-            if (ModelState.IsValid)
-            {
-                var customer = _mapper.Map<Customer>(customerDTO);
-                await _customerRepository.Create(customer);
-                customerDTO = _mapper.Map<CustomerDTO>(customer);
-                return CreatedAtAction(nameof(Get), new { id = customerDTO.Id }, customerDTO);
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var customer = _mapper.Map<Customer>(customerDTO);
+            await _customerRepository.Create(customer);
+            customerDTO = _mapper.Map<CustomerDTO>(customer);
+            return CreatedAtAction(nameof(Get), new { id = customerDTO.Id }, customerDTO);
         }
 
         [HttpPut("{id}")]
@@ -69,17 +67,19 @@ namespace CustomerService.Api.Controllers
                 return NotFound("Customer not found");
             }
 
-            if (ModelState.IsValid)
-            {
-                var customer = _mapper.Map<Customer>(customerDTO);
-                customer.Id = id;
-                await _customerRepository.Update(customer);
-                return Ok("Customer updated successfully");
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            if (id != customerDTO.Id)
+            {
+                return BadRequest();
+            }
+
+            var customer = _mapper.Map<Customer>(customerDTO);
+            await _customerRepository.Update(customer);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -91,7 +91,7 @@ namespace CustomerService.Api.Controllers
             }
 
             await _customerRepository.Delete(id);
-            return Ok("Customer deleted successfully");
+            return NoContent();
         }
     }
 }

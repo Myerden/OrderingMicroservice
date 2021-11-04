@@ -19,10 +19,12 @@ namespace OrderService.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()
-                .HasOne(c => c.Address);
+                .OwnsOne(c => c.Address)
+                .WithOwner();
 
             modelBuilder.Entity<Order>()
-                .HasOne(c => c.Product);
+                .OwnsOne(c => c.Product)
+                .WithOwner();
         }
     }
 }

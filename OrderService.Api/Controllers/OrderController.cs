@@ -48,17 +48,16 @@ namespace OrderService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] OrderDTO orderDTO)
         {
-            if (ModelState.IsValid)
-            {
-                var order = _mapper.Map<Order>(orderDTO);
-                Guid orderId = await _orderRepository.Create(order);
-                orderDTO = _mapper.Map<OrderDTO>(order);
-                return CreatedAtAction(nameof(Get), new { id = orderDTO.Id }, orderDTO);
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var order = _mapper.Map<Order>(orderDTO);
+            await _orderRepository.Create(order);
+            orderDTO = _mapper.Map<OrderDTO>(order);
+            return CreatedAtAction(nameof(Get), new { id = orderDTO.Id }, orderDTO);
+
         }
 
         [HttpPut("{id}")]
@@ -69,17 +68,19 @@ namespace OrderService.Api.Controllers
                 return NotFound("Order not found");
             }
 
-            if (ModelState.IsValid)
-            {
-                var order = _mapper.Map<Order>(orderDTO);
-                order.Id = id;
-                await _orderRepository.Update(order);
-                return Ok("Order updated successfully");
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            if (id != orderDTO.Id)
+            {
+                return BadRequest();
+            }
+
+            var order = _mapper.Map<Order>(orderDTO);
+            await _orderRepository.Update(order);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -91,7 +92,7 @@ namespace OrderService.Api.Controllers
             }
 
             await _orderRepository.Delete(id);
-            return Ok("Order deleted successfully");
+            return NoContent();
         }
 
         [HttpPut("change-status/{id}")]
@@ -102,7 +103,7 @@ namespace OrderService.Api.Controllers
                 return NotFound("Order not found");
             }
             await _orderRepository.ChangeStatus(id, status);
-            return Ok("Order status changed successfully");
+            return NoContent();
         }
 
     }

@@ -17,19 +17,12 @@ namespace OrderService.Api.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<Guid?> Create(Order order)
+        public async Task<Guid> Create(Order order)
         {
-            try
-            {
-                order.CreatedAt = DateTime.Now;
-                await _dbContext.AddAsync(order);
-                await _dbContext.SaveChangesAsync();
-                return order.Id;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            order.CreatedAt = DateTime.Now;
+            await _dbContext.AddAsync(order);
+            await _dbContext.SaveChangesAsync();
+            return order.Id;
         }
 
         public async Task<bool> Update(Order order)
@@ -38,6 +31,9 @@ namespace OrderService.Api.Repository
             {
                 order.UpdatedAt = DateTime.Now;
                 _dbContext.Entry(order).State = EntityState.Modified;
+                _dbContext.Entry(order).Property(o => o.CreatedAt).IsModified = false;
+                _dbContext.Entry(order.Address).State = EntityState.Modified;
+                _dbContext.Entry(order.Product).State = EntityState.Modified;
                 var num = await _dbContext.SaveChangesAsync();
                 return num > 0;
             }
