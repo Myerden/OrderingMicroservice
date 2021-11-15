@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrderService.Api.Dto;
 using OrderService.Api.Model;
+using OrderService.Application.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,9 @@ namespace OrderService.Api.Configuration
     {
         public MappingProfile()
         {
-            CreateMap<Address, AddressDTO>().ReverseMap(); ;
-            CreateMap<Product, ProductDTO>().ReverseMap(); ;
-            CreateMap<Order, OrderDTO>().ReverseMap(); ;
+            CreateMap<Address, AddressDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
         }
     }
 }

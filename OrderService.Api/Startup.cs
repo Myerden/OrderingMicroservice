@@ -30,23 +30,26 @@ namespace OrderService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (Constants.Environment.IsUnitTestActive)
-            {
-                //use in-memory Sqlite for unit tests
+            //if (Constants.Environment.IsUnitTestActive)
+            //{
+            //    //use in-memory Sqlite for unit tests
 
-                var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
-                keepAliveConnection.Open();
+            //    var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
+            //    keepAliveConnection.Open();
 
-                services.AddDbContext<OrderContext>(options =>
-                {
-                    options.UseSqlite(keepAliveConnection);
-                });
-            }
-            else
-            {
+            //    services.AddDbContext<OrderContext>(options =>
+            //    {
+            //        options.UseSqlite(keepAliveConnection);
+            //    });
+            //}
+            //else
+            //{
                 services.AddDbContext<OrderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            }
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            //}
+
+            services.AddScoped<IOrderContext, OrderContext>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -67,10 +70,7 @@ namespace OrderService.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderService.Api v1"));
             }
 
-            if (Constants.Environment.IsUnitTestActive)
-            {
-                context.Database.EnsureCreated();
-            }
+            context.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
 

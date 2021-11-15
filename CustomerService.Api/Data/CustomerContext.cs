@@ -1,5 +1,6 @@
 ﻿using CustomerService.Api.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CustomerService.Api.Data
 {
-    public class CustomerContext : DbContext
+    public class CustomerContext : DbContext, ICustomerContext
     {
         public CustomerContext(DbContextOptions<CustomerContext> options) : base(options)
         {
@@ -22,5 +23,11 @@ namespace CustomerService.Api.Data
                 .OwnsOne(c => c.Address)
                 .WithOwner();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
+        }
+
     }
 }

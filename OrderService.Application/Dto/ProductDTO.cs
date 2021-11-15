@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderService.Api.Dto
+namespace OrderService.Application.Dto
 {
     public class ProductDTO
     {

@@ -10,9 +10,9 @@ namespace CustomerService.Api.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly CustomerContext _dbContext;
+        private readonly ICustomerContext _dbContext;
 
-        public CustomerRepository(CustomerContext dbContext)
+        public CustomerRepository(ICustomerContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -20,7 +20,7 @@ namespace CustomerService.Api.Repository
         public async Task<Guid> Create(Customer customer)
         {
             customer.CreatedAt = DateTime.Now;
-            await _dbContext.AddAsync(customer);
+            _dbContext.Customers.Add(customer);
             await _dbContext.SaveChangesAsync();
             return customer.Id;
         }
@@ -47,8 +47,8 @@ namespace CustomerService.Api.Repository
         {
             try
             {
-                var product = await Get(id);
-                _dbContext.Customers.Remove(product);
+                var customer = await Get(id);
+                _dbContext.Customers.Remove(customer);
                 var num = await _dbContext.SaveChangesAsync();
                 return num > 0;
             }

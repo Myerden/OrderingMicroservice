@@ -10,9 +10,9 @@ namespace OrderService.Api.Repository
 {
     public class OrderRepository: IOrderRepository
     {
-        private readonly OrderContext _dbContext;
+        private readonly IOrderContext _dbContext;
 
-        public OrderRepository(OrderContext dbContext)
+        public OrderRepository(IOrderContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -20,7 +20,7 @@ namespace OrderService.Api.Repository
         public async Task<Guid> Create(Order order)
         {
             order.CreatedAt = DateTime.Now;
-            await _dbContext.AddAsync(order);
+            _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync();
             return order.Id;
         }

@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderService.Api.Dto
+namespace CustomerService.Application.Dto
 {
     public class AddressDTO
     {
-        public int Id { get; set; }
         public string AddressLine { get; set; }
         [Required]
         public string City { get; set; }

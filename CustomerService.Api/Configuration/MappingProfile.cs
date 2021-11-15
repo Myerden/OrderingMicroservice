@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CustomerService.Api.Dto;
 using CustomerService.Api.Model;
+using CustomerService.Application.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace CustomerService.Api.Configuration
     {
         public MappingProfile()
         {
-            CreateMap<Address, AddressDTO>().ReverseMap(); ;
-            CreateMap<Customer, CustomerDTO>().ReverseMap(); ;
+            CreateMap<Address, AddressDTO>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderService.Api.Data
 {
-    public class OrderContext : DbContext
+    public class OrderContext : DbContext, IOrderContext
     {
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
         {
@@ -26,5 +26,11 @@ namespace OrderService.Api.Data
                 .OwnsOne(c => c.Product)
                 .WithOwner();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await base.SaveChangesAsync();
+        }
+
     }
 }

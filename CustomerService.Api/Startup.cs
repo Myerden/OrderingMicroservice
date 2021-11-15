@@ -30,25 +30,27 @@ namespace CustomerService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (Constants.Environment.IsUnitTestActive)
-            {
-                //use in-memory Sqlite for unit tests
+            //if (Constants.Environment.IsUnitTestActive)
+            //{
+            //    //use in-memory Sqlite for unit tests
 
-                var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
-                keepAliveConnection.Open();
+            //    var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
+            //    keepAliveConnection.Open();
 
-                services.AddDbContext<CustomerContext>(options =>
-                {
-                    options.UseSqlite(keepAliveConnection);
-                });
-            }
-            else
-            {
+            //    services.AddDbContext<CustomerContext>(options =>
+            //    {
+            //        options.UseSqlite(keepAliveConnection);
+            //    });
+            //}
+            //else
+            //{
                 services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            }
+            //}
 
             
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerContext, CustomerContext>();
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -69,10 +71,7 @@ namespace CustomerService.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerService.Api v1"));
             }
 
-            if (Constants.Environment.IsUnitTestActive)
-            {
-                context.Database.EnsureCreated();
-            }
+            context.Database.Migrate();
 
             app.UseHttpsRedirection();
 

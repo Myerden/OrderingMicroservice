@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Constants\Constants.csproj" />
+    <ProjectReference Include="..\CustomerService.Application\CustomerService.Application.csproj" />
   </ItemGroup>
 
 </Project>
