@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CustomerService.Api.Dto;
+using CustomerService.Application.Dto;
 using CustomerService.Api.Model;
 using CustomerService.Api.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 
 
 namespace CustomerService.Api.Controllers

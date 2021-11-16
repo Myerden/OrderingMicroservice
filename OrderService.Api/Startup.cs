@@ -55,7 +55,7 @@ namespace OrderService.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderService.Api v1"));
             }
 
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             app.UseHttpsRedirection();
 

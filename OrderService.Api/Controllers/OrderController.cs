@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OrderService.Api.Dto;
+using OrderService.Application.Dto;
 using OrderService.Api.Model;
 using OrderService.Api.Repository;
 using System;

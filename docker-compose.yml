@@ -16,7 +16,7 @@ services:
         restart: always
         
     orderingappgateway:    
-        image: appgateway  
+        image: orderingappgateway  
         container_name: orderingappgateway
         build: 
             context: .
