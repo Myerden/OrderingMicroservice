@@ -1,0 +1,55 @@
+version: "3.6"
+services:
+    orderingrabbitmq:
+        ports:
+            - 5672:5672
+            - 15672:15672
+        environment:
+            - RABBITMQ_DEFAULT_USER=user
+            - RABBITMQ_DEFAULT_PASS=password 
+    
+    customerdb:
+        ports: 
+            - 5432:5432
+        environment: 
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=CustomerDB
+        
+    orderdb:
+        ports: 
+            - 5433:5432
+        environment: 
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=OrderDB
+        
+    orderingappgateway:
+        ports:
+            - 5000:80
+            - 5001:443
+                
+    customerapi:
+        ports:
+            - 5002:80
+            - 5003:443
+        environment:
+            - DefaultConnection=Server=customerdb;Port=5432;User Id=admin;Password=admin;Database=CustomerDB;SSL Mode=Disable;
+        
+    orderapi:
+        ports:
+            - 5004:80
+            - 5005:443
+        environment:
+            - DefaultConnection=Server=orderdb;Port=5432;User Id=admin;Password=admin;Database=OrderDB;SSL Mode=Disable;
+            - RABBITMQ_HOSTNAME=orderingrabbitmq
+            - RABBITMQ_USERNAME=user
+            - RABBITMQ_PASSWORD=password
+            - RABBITMQ_REPORT_QUEUE=orderQueue
+
+    pgadmin:
+        environment:
+          - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+          - PGADMIN_DEFAULT_PASSWORD=admin
+        ports:
+          - "5050:80"
