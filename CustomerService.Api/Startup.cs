@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,24 +29,8 @@ namespace CustomerService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //if (Constants.Environment.IsUnitTestActive)
-            //{
-            //    //use in-memory Sqlite for unit tests
+            services.AddDbContext<CustomerContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            //    var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
-            //    keepAliveConnection.Open();
-
-            //    services.AddDbContext<CustomerContext>(options =>
-            //    {
-            //        options.UseSqlite(keepAliveConnection);
-            //    });
-            //}
-            //else
-            //{
-                services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //}
-
-            
             services.AddScoped<ICustomerContext, CustomerContext>();
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();

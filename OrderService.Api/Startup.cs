@@ -30,22 +30,7 @@ namespace OrderService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //if (Constants.Environment.IsUnitTestActive)
-            //{
-            //    //use in-memory Sqlite for unit tests
-
-            //    var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
-            //    keepAliveConnection.Open();
-
-            //    services.AddDbContext<OrderContext>(options =>
-            //    {
-            //        options.UseSqlite(keepAliveConnection);
-            //    });
-            //}
-            //else
-            //{
-                services.AddDbContext<OrderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //}
+            services.AddDbContext<OrderContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IOrderContext, OrderContext>();
 
