@@ -1,15 +1,15 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001"
+    "BaseUrl": "http://localhost:5000"
   },
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/Customer",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "customerapi",
-          "Port": 5003
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/customers",
@@ -17,11 +17,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Customer/{all}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "customerapi",
-          "Port": 5003
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/customers/{all}",
@@ -29,11 +29,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Order",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "orderapi",
-          "Port": 5005
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/orders",
@@ -41,11 +41,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Order/{all}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "orderapi",
-          "Port": 5005
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/orders/{all}",
