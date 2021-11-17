@@ -19,12 +19,13 @@ namespace OrderService.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()
-                .OwnsOne(c => c.Address)
+                .OwnsOne(o => o.Address)
                 .WithOwner();
 
             modelBuilder.Entity<Order>()
-                .OwnsOne(c => c.Product)
-                .WithOwner();
+                .HasOne(o => o.Product)
+                .WithOne()
+                .HasForeignKey(typeof(Order), "ProductId");
         }
 
         public async Task<int> SaveChangesAsync()

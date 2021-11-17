@@ -95,7 +95,7 @@ namespace OrderService.Api.Controllers
             return NoContent();
         }
 
-        [HttpPut("change-status/{id}")]
+        [HttpPut("{id}/change-status")]
         public async Task<IActionResult> Put(Guid id, [FromQuery] string status)
         {
             if (await _orderRepository.Validate(id) == false)

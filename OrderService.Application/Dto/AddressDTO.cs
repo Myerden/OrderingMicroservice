@@ -8,7 +8,6 @@ namespace OrderService.Application.Dto
 {
     public class AddressDTO
     {
-        public int Id { get; set; }
         public string AddressLine { get; set; }
         [Required]
         public string City { get; set; }

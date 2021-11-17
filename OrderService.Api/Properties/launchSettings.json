@@ -14,6 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
+        "DefaultConnection": "Server=orderdb;Port=5432;User Id=admin;Password=admin;Database=OrderDB;SSL Mode=Disable;",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
