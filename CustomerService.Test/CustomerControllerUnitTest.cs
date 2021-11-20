@@ -310,7 +310,7 @@ namespace CustomerService.Test
 
         public CustomerDTO UNVALID = new CustomerDTO()
         {
-            Name = "Yusuf Erden",
+            //Name = "Yusuf Erden",
             Email = "myusuferden@gmail.com",
             Address = new AddressDTO()
             {

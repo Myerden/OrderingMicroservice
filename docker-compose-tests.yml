@@ -1,0 +1,52 @@
+version: "3.6"
+services:
+    #orderingrabbitmq:       
+    #    image: rabbitmq:3-management
+    #    container_name: orderingrabbitmq
+    #    restart: always
+    
+    customerdb: 
+        image: postgres
+        container_name: customerdb
+        restart: always
+        
+    orderdb: 
+        image: postgres
+        container_name: orderdb
+        restart: always
+        
+    #orderingappgateway:    
+    #    image: orderingappgateway  
+    #    container_name: orderingappgateway
+    #    build: 
+    #        context: .
+    #        dockerfile: AppGateway/Dockerfile 
+    #    restart: always    
+    #    depends_on:
+    #        - customerapi
+    #        - orderapi
+                
+    #customerapi:
+    #    image: customerapi  
+    #    container_name: customerapi  
+    #    build: 
+    #        context: .
+    #        dockerfile: CustomerService.Api/Dockerfile 
+    #    restart: always       
+    #    depends_on:
+    #        - customerdb
+        
+    #orderapi:
+    #    image: orderapi     
+    #    container_name: orderapi
+    #    build: 
+    #        context: .
+    #        dockerfile: OrderService.Api/Dockerfile  
+    #    restart: always
+    #    depends_on:
+    #        - orderingrabbitmq 
+    #        - orderdb 
+
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
