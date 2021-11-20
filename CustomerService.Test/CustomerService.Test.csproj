@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerService.Api\CustomerService.Api.csproj" />
+  </ItemGroup>
+
 </Project>
