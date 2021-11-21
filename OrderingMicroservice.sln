@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Api", "OrderSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService.Test", "CustomerService.Test\CustomerService.Test.csproj", "{A1221499-F796-49AF-B46F-080340D12450}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Test", "OrderService.Test\OrderService.Test.csproj", "{D87C7ADD-1FAC-4176-B1B4-B3C10E55D87C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService.Application", "CustomerService.Application\CustomerService.Application.csproj", "{DD8E23D1-5DFF-48E3-B3B9-1B7FE421F972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerService.Application", "CustomerService.Application\CustomerService.Application.csproj", "{DD8E23D1-5DFF-48E3-B3B9-1B7FE421F972}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Application", "OrderService.Application\OrderService.Application.csproj", "{DC4E662E-0F3C-473C-A17F-F1781D3A9C59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Application", "OrderService.Application\OrderService.Application.csproj", "{DC4E662E-0F3C-473C-A17F-F1781D3A9C59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Test", "OrderService.Test\OrderService.Test.csproj", "{0E5726E0-F29D-4DFD-974D-BD6904EBAA8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,6 @@ Global
 		{A1221499-F796-49AF-B46F-080340D12450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1221499-F796-49AF-B46F-080340D12450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1221499-F796-49AF-B46F-080340D12450}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D87C7ADD-1FAC-4176-B1B4-B3C10E55D87C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D87C7ADD-1FAC-4176-B1B4-B3C10E55D87C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D87C7ADD-1FAC-4176-B1B4-B3C10E55D87C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D87C7ADD-1FAC-4176-B1B4-B3C10E55D87C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD8E23D1-5DFF-48E3-B3B9-1B7FE421F972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD8E23D1-5DFF-48E3-B3B9-1B7FE421F972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD8E23D1-5DFF-48E3-B3B9-1B7FE421F972}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{DC4E662E-0F3C-473C-A17F-F1781D3A9C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC4E662E-0F3C-473C-A17F-F1781D3A9C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC4E662E-0F3C-473C-A17F-F1781D3A9C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E5726E0-F29D-4DFD-974D-BD6904EBAA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5726E0-F29D-4DFD-974D-BD6904EBAA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5726E0-F29D-4DFD-974D-BD6904EBAA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5726E0-F29D-4DFD-974D-BD6904EBAA8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

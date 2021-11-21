@@ -183,12 +183,12 @@ namespace CustomerService.Test
 
             var id = customerData.DEMO[0].Id;
 
-            customerData.DEMO[0].Name = "Updated First Name";
-            customerData.DEMO[0].Email = "Updated Last Name";
-            customerData.DEMO[0].Address.AddressLine = "Updated Company Name";
-            customerData.DEMO[0].Address.City = "Updated Company Name";
-            customerData.DEMO[0].Address.CityCode = 9;
-            customerData.DEMO[0].Address.Country = "Updated Company Name";
+            customerData.DEMO[0].Name = "Updated customer name";
+            customerData.DEMO[0].Email = "example4@gmail.com";
+            customerData.DEMO[0].Address.AddressLine = "Updated address line";
+            customerData.DEMO[0].Address.City = "Kýrþehir";
+            customerData.DEMO[0].Address.CityCode = 40;
+            customerData.DEMO[0].Address.Country = "Turkey";
 
             controller.ValidateModel(customerData.DEMO[0]);
 
@@ -222,13 +222,12 @@ namespace CustomerService.Test
             var customer = new CustomerDTO()
             {
                 Id = id,
-                Name = "Updated First Name",
-                //Email = "Updated Last Name", 
+                Name = "Updated name",
             };
 
             controller.ValidateModel(customer);
 
-            // LastName field is required
+            // Email field is required
             var updatedResult = await controller.Put(id, customer);
 
             Assert.IsType<BadRequestObjectResult>(updatedResult);
@@ -244,8 +243,8 @@ namespace CustomerService.Test
             var customer = new CustomerDTO()
             {
                 Id = id,
-                Name = "Updated First Name",
-                Email = "Updated Last Name",
+                Name = "Updated name",
+                Email = "example222@example.com",
                 Address = new AddressDTO()
                 {
 
@@ -298,26 +297,26 @@ namespace CustomerService.Test
         public CustomerDTO VALID = new CustomerDTO()
         {
             Name = "Yusuf Erden",
-            Email = "myusuferden@gmail.com",
+            Email = "example@example.com",
             Address = new AddressDTO()
             {
-                AddressLine = "",
-                City = "",
-                CityCode = 27,
-                Country = ""
+                AddressLine = "Address line 1",
+                City = "New York",
+                CityCode = 25,
+                Country = "United States"
             }
         };
 
         public CustomerDTO UNVALID = new CustomerDTO()
         {
             //Name = "Yusuf Erden",
-            Email = "myusuferden@gmail.com",
+            Email = "example1@example.com",
             Address = new AddressDTO()
             {
-                AddressLine = "",
-                City = "",
-                CityCode = 27,
-                Country = ""
+                AddressLine = "Address line 2",
+                City = "Yozgat",
+                CityCode = 66,
+                Country = "Turkey"
             }
         };
 
@@ -325,25 +324,25 @@ namespace CustomerService.Test
             new CustomerDTO()
             {
                 Name = "Yusuf Erden",
-                Email = "myusuferden@gmail.com",
+                Email = "example2@example.com",
                 Address = new AddressDTO()
                 {
-                    AddressLine = "",
-                    City = "",
-                    CityCode = 27,
-                    Country = ""
+                    AddressLine = "Address line 3",
+                    City = "Konya",
+                    CityCode = 42,
+                    Country = "Turkey"
                 }
             },
             new CustomerDTO()
             {
                 Name = "Yusuf Erden",
-                Email = "myusuferden@gmail.com",
+                Email = "example3@example.com",
                 Address = new AddressDTO()
                 {
-                    AddressLine = "",
-                    City = "",
-                    CityCode = 27,
-                    Country = ""
+                    AddressLine = "Address line 4",
+                    City = "Zonguldak",
+                    CityCode = 67,
+                    Country = "Turkey"
                 }
             }
         };

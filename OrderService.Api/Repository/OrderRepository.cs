@@ -60,7 +60,7 @@ namespace OrderService.Api.Repository
 
         public async Task<IEnumerable<Order>> Get()
         {
-            return await _dbContext.Orders.ToListAsync();
+            return await _dbContext.Orders.Include(o => o.Product).Include(o => o.Address).ToListAsync();
         }
 
         public async Task<Order> Get(Guid id)

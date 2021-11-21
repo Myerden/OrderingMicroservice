@@ -10,16 +10,16 @@ namespace OrderService.Api.Consumer
 {
     public class OrderConsumer : IConsumer<OrderDTO>
     {
-        private readonly IReportService _reportService;
+        private readonly IOrderMailService _orderMailService;
 
-        public OrderConsumer(IReportService reportService)
+        public OrderConsumer(IOrderMailService orderMailService)
         {
-            _reportService = reportService;
+            _orderMailService = orderMailService;
         }
 
-        public async Task Consume(ConsumeContext<ReportDto> context)
+        public async Task Consume(ConsumeContext<OrderDTO> context)
         {
-            await _reportService.GenerateReport(context.Message);
+            await _orderMailService.SendMail(context.Message);
         }
     }
 }

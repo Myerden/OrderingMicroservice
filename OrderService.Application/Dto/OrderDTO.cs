@@ -12,8 +12,10 @@ namespace OrderService.Application.Dto
         [Required]
         public Guid CustomerId { get; set; }
         [Required]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
         [Required]
+        [Range(double.Epsilon, double.MaxValue)]
         public double Price { get; set; }
         [Required]
         public string Status { get; set; }
