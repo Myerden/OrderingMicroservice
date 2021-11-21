@@ -20,6 +20,11 @@ This service includes:
 * Ocelot is used for Gateway implementation
 * Containerization
 
+|Endpoint|Allowed Methods|Description|
+|-|-|-|
+|/customers|Post, Put, Get, Delete|Customer microservice|
+|/orders|Post, Put, Get, Delete|Order microservice|
+
 ### CustomerService.Api
 Customer microservice that responsible for basic CRUD implementations over Customer Entity.
 
@@ -30,6 +35,14 @@ This service includes:
 * Repository Pattern implementation
 * Containerization
 
+|Endpoint|Method|Description|
+|-|-|-|
+|/api/Customer|Get|List all customers|
+|/api/Customer/{id}|Get|Get customer|
+|/api/Customer|Post|Insert customer|
+|/api/Customer/{id}|Put|Update customer|
+|/api/Customer/{id}|Delete|Delete customer|
+
 ### OrderService.Api
 Order microservice that responsible for basic CRUD implementations over Order Entity.
 
@@ -39,6 +52,15 @@ This service includes:
 * PostgreSQL as Database Provider
 * Repository Pattern implementation
 * Containerization
+
+|Endpoint|Method|Description|
+|-|-|-|
+|/api/Order|Get|List all orders|
+|/api/Order/{id}|Get|Get order|
+|/api/Order|Post|Insert order|
+|/api/Order/{id}|Put|Update order|
+|/api/Order/{id}|Delete|Delete order|
+|/api/Order/{id}/change-status|Put|Update order status|
 
 ## Run The Project
 You will need the following tools:
